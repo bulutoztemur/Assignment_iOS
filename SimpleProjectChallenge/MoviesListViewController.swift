@@ -129,7 +129,7 @@ class MoviesListViewController: UIViewController, UICollectionViewDelegate, UICo
         let windowRect = self.view.window?.frame
         let windowWidth = windowRect?.size.width
         let cellSize = getCellSize()
-        return CGSize(width: (cellSize.0 * windowWidth! / 13), height: cellSize.1)
+        return CGSize(width: (cellSize.0 * (windowWidth! - 35) / 12), height: cellSize.1)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
