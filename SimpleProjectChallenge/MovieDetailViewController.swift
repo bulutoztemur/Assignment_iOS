@@ -35,23 +35,19 @@ class MovieDetailViewController: UIViewController {
     }
     
     func fetchMovieDetailData() {
-        MovieServiceAPI.shared.fetchMovieDetail(id: (self.movieInfo?.id)!, completion: {
-            resp in
-            switch resp {
-            case .success(let result):
-                self.movieDetail = result
-                self.titleLabel.text = self.movieDetail?.original_title
-                self.overviewLabel.text = self.movieDetail?.overview
-                if let voteCount = self.movieDetail?.vote_count {
-                    self.voteCountLabel.text = "Vote Count: \(voteCount)"
-                }
-                if let posterPath = self.movieDetail?.poster_path {
-                    self.posterImage.load(url: URL(string: "https://image.tmdb.org/t/p/w200/" + posterPath)!)
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
+        let serviceInput = MovieDetailServiceInput(id: (self.movieInfo?.id)!)
+        MovieServiceAPI.shared.processOutputData(input: serviceInput){
+            (movieDetailResp: MovieDetail) in
+            self.movieDetail = movieDetailResp
+            self.titleLabel.text = self.movieDetail?.original_title
+            self.overviewLabel.text = self.movieDetail?.overview
+            if let voteCount = self.movieDetail?.vote_count {
+                self.voteCountLabel.text = "Vote Count: \(voteCount)"
             }
-        } )
+            if let posterPath = self.movieDetail?.poster_path {
+                self.posterImage.load(url: URL(string: "https://image.tmdb.org/t/p/w200/" + posterPath)!)
+            }
+        }
     }
     
     func createRightBarButton() -> UIBarButtonItem {

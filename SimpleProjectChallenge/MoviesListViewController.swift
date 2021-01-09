@@ -46,12 +46,11 @@ class MoviesListViewController: UIViewController, UICollectionViewDelegate, UICo
     var isWaiting: Bool = false  // when loading more on bottom, this flag prevents consecutively service call
     var fromWhichCell: Int? = 0
     var fromWhichCellFiltered: Int? = 0
+    let screenWidth = UIScreen.main.bounds.size.width
     
     private enum Constants {
         static let gridCellWidthRate: CGFloat = 6
         static let listCellWidthRate: CGFloat = 12
-        static let gridCellHeightSize: CGFloat = 250
-        static let listCellHeightSize: CGFloat = 400
         static let listIconName: String = "list"
         static let gridIconName: String = "grid"
         static let pageTitle: String = "Contents"
@@ -75,7 +74,7 @@ class MoviesListViewController: UIViewController, UICollectionViewDelegate, UICo
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.fetchAPIDataAndSetToCollectionView()
+        self.fetchMovieData()
         self.title = Constants.pageTitle
         self.setRightBarButton()
         self.collectionView.register(UINib(nibName: "MovieCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "MovieCell")
@@ -84,28 +83,25 @@ class MoviesListViewController: UIViewController, UICollectionViewDelegate, UICo
         self.searchBar.delegate = self
         self.searchBar.placeholder = Constants.searchBarPlaceholder
     }
-    
+        
     // MARK: MOVIE REST API CALL
-    func fetchAPIDataAndSetToCollectionView() {
-        MovieServiceAPI.shared.fetchMovieList() {
-            resp in
-            switch resp {
-            case .success(let result):
-                for movie in result.results! {
+    func fetchMovieData() {
+        let serviceInput = MovieServiceInput()
+        MovieServiceAPI.shared.processOutputData(input: serviceInput){
+            (movieResp: MoviesResponse) in
+                MovieServiceInput.pageID += 1
+                for movie in movieResp.results! {
                     let key = String(movie.id ?? 0)
                     let isFav = UserDefaults.standard.bool(forKey: key)
                     self.favData.append(isFav)
                 }
                 self.filteredFavData = self.favData
-                self.moviesList.append(contentsOf: result.results!)
+                self.moviesList.append(contentsOf: movieResp.results!)
                 self.filteredMoviesList = self.moviesList
                 self.collectionView.reloadData()
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
         }
     }
-
+    
     // MARK: COLLECTION VIEW DELEGATE AND DATA SOURCE METHODS
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return filteredMoviesList.count
@@ -126,10 +122,10 @@ class MoviesListViewController: UIViewController, UICollectionViewDelegate, UICo
     }
         
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let windowRect = self.view.window?.frame
-        let windowWidth = windowRect?.size.width
-        let cellSize = getCellSize()
-        return CGSize(width: (cellSize.0 * (windowWidth! - 35) / 12), height: cellSize.1)
+        let cellWidthRate = getCellWidthRate()
+        let cellWidth = cellWidthRate * (screenWidth - 30) / 12  // minus 30 ==> 10 constraint left + 10 constraint rigth side + 10 distance between cell in grid mode
+        let cellHeight = cellWidth * 1.5
+        return CGSize(width: cellWidth, height: cellHeight)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -146,15 +142,15 @@ class MoviesListViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     private func doPaging() {
-        self.fetchAPIDataAndSetToCollectionView()
+        self.fetchMovieData()
         self.isWaiting = false
     }
     
-    func getCellSize() -> (CGFloat, CGFloat) {
+    func getCellWidthRate() -> CGFloat {
         if isListView {
-            return (Constants.listCellWidthRate, Constants.listCellHeightSize)
+            return (Constants.listCellWidthRate)
         } else {
-            return (Constants.gridCellWidthRate, Constants.gridCellHeightSize)
+            return (Constants.gridCellWidthRate)
         }
     }
     
