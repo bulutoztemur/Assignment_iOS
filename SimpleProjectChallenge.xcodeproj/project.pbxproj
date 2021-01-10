@@ -79,27 +79,75 @@
 		175C23BC259E0F220050530B /* SimpleProjectChallenge */ = {
 			isa = PBXGroup;
 			children = (
+				1779A80825AB214D0015E3FA /* Resources */,
+				1779A80725AB209A0015E3FA /* Utils */,
+				1779A80625AB20250015E3FA /* Views */,
+				1779A80525AB20040015E3FA /* Models */,
+				1779A80425AB1FCA0015E3FA /* Controllers */,
+				1779A80325AB1FB90015E3FA /* AppDelegate */,
+				175C240325A32D280050530B /* README.md */,
+			);
+			path = SimpleProjectChallenge;
+			sourceTree = "<group>";
+		};
+		1779A80325AB1FB90015E3FA /* AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
 				175C23BD259E0F220050530B /* AppDelegate.swift */,
 				175C23BF259E0F220050530B /* SceneDelegate.swift */,
-				175C23C6259E0F230050530B /* Assets.xcassets */,
-				175C23C8259E0F230050530B /* LaunchScreen.storyboard */,
-				175C23CB259E0F230050530B /* Info.plist */,
+			);
+			name = AppDelegate;
+			sourceTree = "<group>";
+		};
+		1779A80425AB1FCA0015E3FA /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
 				175C23D1259F31240050530B /* MoviesListViewController.swift */,
 				175C23D2259F31240050530B /* MoviesListViewController.xib */,
-				175C23D5259F3B0A0050530B /* MovieCollectionViewCell.swift */,
-				175C23D6259F3B0A0050530B /* MovieCollectionViewCell.xib */,
-				175C23D9259FC0750050530B /* MoviesResponse.swift */,
-				175C23DB259FC0AC0050530B /* Movie.swift */,
-				175C23DD259FC4190050530B /* MovieServiceAPI.swift */,
 				175C23ED25A114BF0050530B /* MovieDetailViewController.swift */,
 				175C23EE25A114BF0050530B /* MovieDetailViewController.xib */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		1779A80525AB20040015E3FA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				175C23D9259FC0750050530B /* MoviesResponse.swift */,
+				175C23DB259FC0AC0050530B /* Movie.swift */,
 				175C23F125A1BECB0050530B /* MovieDetail.swift */,
-				175C240325A32D280050530B /* README.md */,
 				1752B9A425A5B7C3008880E9 /* BaseServiceInput.swift */,
 				1752B9A625A5B7F3008880E9 /* MovieDetailServiceInput.swift */,
 				1779A7FD25A9FF990015E3FA /* MovieServiceInput.swift */,
 			);
-			path = SimpleProjectChallenge;
+			name = Models;
+			sourceTree = "<group>";
+		};
+		1779A80625AB20250015E3FA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				175C23D5259F3B0A0050530B /* MovieCollectionViewCell.swift */,
+				175C23D6259F3B0A0050530B /* MovieCollectionViewCell.xib */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		1779A80725AB209A0015E3FA /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				175C23DD259FC4190050530B /* MovieServiceAPI.swift */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
+		1779A80825AB214D0015E3FA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				175C23C6259E0F230050530B /* Assets.xcassets */,
+				175C23C8259E0F230050530B /* LaunchScreen.storyboard */,
+				175C23CB259E0F230050530B /* Info.plist */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
