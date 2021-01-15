@@ -60,13 +60,12 @@ class MovieDetailViewController: UIViewController {
     }
 
     @objc func addOrRemoveFavorite() {
-        guard let movieID = self.movieDetail?.id else {
-            return
+        if let movieID = self.movieDetail?.id {
+            let key = String(movieID)
+            let isFav = UserDefaults.standard.bool(forKey: key)
+            UserDefaults.standard.removeObject(forKey: key)
+            UserDefaults.standard.set(!isFav, forKey: key)
+            favoriteDelegate?.favoriteHandler(fav: !isFav, id: movieID)
         }
-        let key = String(movieID)
-        let isFav = UserDefaults.standard.bool(forKey: key)
-        UserDefaults.standard.removeObject(forKey: key)
-        UserDefaults.standard.set(!isFav, forKey: key)
-        favoriteDelegate?.favoriteHandler(fav: !isFav, id: movieID)
     }
 }
