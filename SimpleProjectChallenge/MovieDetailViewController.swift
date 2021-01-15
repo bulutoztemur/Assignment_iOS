@@ -12,6 +12,7 @@ class MovieDetailViewController: UIViewController {
     
     let movieInfo: Movie?
     var movieDetail: MovieDetail?
+    var favoriteDelegate: FavoriteDelegate?
     
     @IBOutlet weak var posterImage: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -63,5 +64,6 @@ class MovieDetailViewController: UIViewController {
         let isFav = UserDefaults.standard.bool(forKey: key)
         UserDefaults.standard.removeObject(forKey: key)
         UserDefaults.standard.set(!isFav, forKey: key)
+        favoriteDelegate?.favoriteHandler(fav: !isFav, id: self.movieDetail?.id ?? 0)
     }
 }

@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol FavoriteDelegate {
+    func favoriteHandler(fav: Bool, id: Int)
+}
+
 extension UIImageView {
     func load(url: URL) {
         DispatchQueue.global().async { [weak self] in
@@ -34,8 +38,8 @@ extension UserDefaults {
     }
 }
 
-class MoviesListViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
-    
+class MoviesListViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UISearchBarDelegate, FavoriteDelegate {
+
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
     var isListView = false // true for List View, false for Grid View
@@ -44,7 +48,6 @@ class MoviesListViewController: UIViewController, UICollectionViewDelegate, UICo
     var filteredFavData: [Bool] = []
     var filteredMoviesList: [Movie] = []
     var isWaiting: Bool = false  // when loading more on bottom, this flag prevents consecutively service call
-    var fromWhichCell: Int? = 0
     var fromWhichCellFiltered: Int? = 0
     let screenWidth = UIScreen.main.bounds.size.width
     
@@ -59,17 +62,6 @@ class MoviesListViewController: UIViewController, UICollectionViewDelegate, UICo
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if filteredMoviesList.count > 0{
-            let movie = self.filteredMoviesList[fromWhichCellFiltered!]
-            let key = String(movie.id ?? 0)
-            let isFav = UserDefaults.standard.bool(forKey: key)
-            if isFav != self.filteredFavData[fromWhichCellFiltered!] {
-                self.filteredFavData[fromWhichCellFiltered!] = isFav
-                self.favData[fromWhichCell!] = isFav
-                let indexPathOfUpdatedCell = IndexPath(row: fromWhichCellFiltered!, section: 0)
-                self.collectionView.reloadItems(at: [indexPathOfUpdatedCell])
-            }
-        }
     }
 
     override func viewDidLoad() {
@@ -129,18 +121,12 @@ class MoviesListViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-         let movie = filteredMoviesList[indexPath.row]
-         for ind in 0..<moviesList.count {
-             if movie.id == self.moviesList[ind].id {
-                 self.fromWhichCell = ind
-             }
-         }
-        
         self.fromWhichCellFiltered = indexPath.row
         let detailVC = MovieDetailViewController(movie: filteredMoviesList[indexPath.row])
+        detailVC.favoriteDelegate = self
         navigationController?.pushViewController(detailVC, animated: true)
     }
-    
+
     private func doPaging() {
         self.fetchMovieData()
         self.isWaiting = false
@@ -197,6 +183,24 @@ class MoviesListViewController: UIViewController, UICollectionViewDelegate, UICo
         }
         self.collectionView.reloadData()
     }
+    
+    // MARK: FAVORITE DELEGATE METHOD
+    func favoriteHandler(fav: Bool, id: Int) {
+        let fromWhichCell = self.findMovieIndexInNonFilterArray(movieID: id)
+        self.favData[fromWhichCell] = fav
+        self.filteredFavData[fromWhichCellFiltered!] = fav
+        let indexPathOfUpdatedCell = IndexPath(row: fromWhichCellFiltered!, section: 0)
+        self.collectionView.reloadItems(at: [indexPathOfUpdatedCell])
+    }
+    
+    func findMovieIndexInNonFilterArray(movieID: Int) -> Int {
+        var indexMovie: Int?
+        for index in 0..<moviesList.count {
+            if movieID == self.moviesList[index].id {
+                indexMovie = index
+            }
+        }
+        return indexMovie!
+    }
 }
-
 
