@@ -51,3 +51,4 @@ When selected a cell in collection view, *MovieDetailViewController* pushed to n
 
 I have handled paging operation in *willDisplay* method of collection view. I have used *isWaiting* flag in order to prevent call service consecutively.
 
+To add/remove favorite icon operation, I have defined *FavoriteDelegate* protocol that contains *favoriteHandler* method. *MoviesListViewController* conforms to *FavoriteDelegate* protocol and implements *favoriteHandler* method. I have declare *favoriteDelegate* varible that is type of *FavoriteDelegate* in *MovieDetailViewController*. In *didSelectItemAt* method in *MoviesListViewController*, it assigned itself as *favoriteDelegate*.
