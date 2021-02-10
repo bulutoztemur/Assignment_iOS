@@ -1,3 +1,9 @@
+![Alt text](/gridmain.png?raw=true)
+![Alt text](/listmain.png?raw=true)
+![Alt text](/searchmain.png?raw=true)
+![Alt text](/detail.png?raw=true)
+
+
 # Project Files and Their Responsibilities
 
 ### MoviesListViewController
