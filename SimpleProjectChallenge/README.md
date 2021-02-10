@@ -28,19 +28,6 @@ This struct correspondings to return value of movie detail API.
 
 This class is a Singleton class that is used for calling services.
 
-### BaseServiceInput
-
-It includes url variable. When making a service call with input data, the input data should be inherited from BaseServiceInput.
-
-### MovieServiceInput
-
-Its instance is used as service input when calling movie service api.
-
-### MovieDetailServiceInput
-
-Its instance is used as service input when calling movie detail service api.
-  
-
 # Project Overview
 
 I haven’t used storyboards in the project. Instead, I’ve used interface builder(xib) files. In *SceneDelegate.swift* file, I set the rootViewController to a UINavigationViewController. It’s rootViewController is *MovieListViewController*. So, when app starting, *MovieListViewController* becomes the top.
