@@ -26,20 +26,7 @@ This struct correspondings to return value of movie detail API.
 
 ### MovieServiceAPI 
 
-This class is a Singleton class that is used for calling services.
-
-### BaseServiceInput
-
-It includes url variable. When making a service call with input data, the input data should be inherited from BaseServiceInput.
-
-### MovieServiceInput
-
-Its instance is used as service input when calling movie service api.
-
-### MovieDetailServiceInput
-
-Its instance is used as service input when calling movie detail service api.
-  
+This class is a Singleton class that is used for calling services.  
 
 # Project Overview
 
