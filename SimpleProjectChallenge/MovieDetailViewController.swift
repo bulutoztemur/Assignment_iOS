@@ -36,10 +36,8 @@ class MovieDetailViewController: UIViewController {
     }
     
     func fetchMovieDetailData() {
-        let serviceInput = MovieDetailServiceInput(id: (self.movieInfo?.id)!)
-        MovieServiceAPI.shared.processOutputData(input: serviceInput){
-            (movieDetailResp: MovieDetail) in
-            self.movieDetail = movieDetailResp
+        MovieServiceAPI.shared.makeServiceCall(componentURL: self.createComponentURL()) { (output: MovieDetail) in
+            self.movieDetail = output
             self.titleLabel.text = self.movieDetail?.original_title
             self.overviewLabel.text = self.movieDetail?.overview
             if let voteCount = self.movieDetail?.vote_count {
@@ -49,6 +47,20 @@ class MovieDetailViewController: UIViewController {
                 self.posterImage.load(url: URL(string: "https://image.tmdb.org/t/p/w200/" + posterPath)!)
             }
         }
+    }
+    
+    func createComponentURL() -> URLComponents {
+        var componentURL = URLComponents()
+        guard let movieID = self.movieInfo?.id else {
+            return componentURL
+        }
+        componentURL.scheme = "https"
+        componentURL.host = "api.themoviedb.org"
+        componentURL.path = "/3/movie/\(movieID)"
+        let queryItemLanguage = URLQueryItem(name: "language", value: "en-US")
+        let queryItemAPIKey = URLQueryItem(name: "api_key", value: "fd2b04342048fa2d5f728561866ad52a")
+        componentURL.queryItems = [queryItemLanguage, queryItemAPIKey]
+        return componentURL
     }
     
     func createRightBarButton() -> UIBarButtonItem {

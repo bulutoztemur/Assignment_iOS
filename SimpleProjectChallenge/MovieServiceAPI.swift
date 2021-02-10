@@ -11,34 +11,44 @@ import Foundation
 class MovieServiceAPI {
     public static let shared = MovieServiceAPI() //Singleton object
     private init() {} //No one can create instance
-    public var pageID = 1
+    public static var pageID = 1
+    
+    func fetchGenericData<T:Codable>(url: URL, completion: @escaping (Result<T, Error>) -> Void) {
 
-    func fetchGenericData<T:Codable>(input: BaseServiceInput, completion: @escaping (Result<T, Error>) -> Void) {
-        var request = URLRequest(url: URL(string: input.url)!)
-        request.httpMethod = "GET"
-        URLSession.shared.dataTask(with: request, completionHandler: { data, response, error -> Void in
-            do {
-                let jsonDecoder = JSONDecoder()
-                let responseModel = try jsonDecoder.decode(T.self, from: data!)
-                DispatchQueue.main.async {
-                    completion(.success(responseModel))
-                }
-            } catch let error {
-              print(error)
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if let httpResponse = response as? HTTPURLResponse {
+                print("API status: \(httpResponse.statusCode)")
             }
-        }).resume()
+            
+            guard let validData = data, error == nil else {
+                completion(.failure(error!))
+                return
+            }
+
+            do {
+                let responseObject = try JSONDecoder().decode(T.self, from: validData)
+                completion(.success(responseObject))
+            } catch let serializationError {
+                completion(.failure(serializationError))
+            }
+        }.resume()
     }
     
-    func processOutputData<T:Codable>(input: BaseServiceInput, process: @escaping (T) -> Void){
-        fetchGenericData(input: input, completion: {
-                (resp: Result<T, Error>) in
-                switch resp {
+    func makeServiceCall<T:Codable>(componentURL: URLComponents, process: @escaping (T) -> Void){
+        guard let validURL = componentURL.url else {
+            print("URL creation failed...")
+            return
+        }
+        
+        self.fetchGenericData(url: validURL) { (result: Result<T, Error>) in
+            DispatchQueue.main.async {
+                switch result {
                 case .success(let output):
                     process(output)
                 case .failure(let error):
-                    print(error.localizedDescription)
+                    print(error)
                 }
-        })
+            }
+        }
     }
-    
 }

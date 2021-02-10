@@ -78,20 +78,30 @@ class MoviesListViewController: UIViewController, UICollectionViewDelegate, UICo
         
     // MARK: MOVIE REST API CALL
     func fetchMovieData() {
-        let serviceInput = MovieServiceInput()
-        MovieServiceAPI.shared.processOutputData(input: serviceInput){
-            (movieResp: MoviesResponse) in
-                MovieServiceInput.pageID += 1
-                for movie in movieResp.results! {
-                    let key = String(movie.id ?? 0)
-                    let isFav = UserDefaults.standard.bool(forKey: key)
-                    self.favData.append(isFav)
-                }
-                self.filteredFavData = self.favData
-                self.moviesList.append(contentsOf: movieResp.results!)
-                self.filteredMoviesList = self.moviesList
-                self.collectionView.reloadData()
+        MovieServiceAPI.shared.makeServiceCall(componentURL: self.createComponentURL()) { (output: MoviesResponse) in
+            MovieServiceAPI.pageID += 1
+            for movie in output.results! {
+                let key = String(movie.id ?? 0)
+                let isFav = UserDefaults.standard.bool(forKey: key)
+                self.favData.append(isFav)
+            }
+            self.filteredFavData = self.favData
+            self.moviesList.append(contentsOf: output.results!)
+            self.filteredMoviesList = self.moviesList
+            self.collectionView.reloadData()
         }
+    }
+    
+    func createComponentURL() -> URLComponents {
+        var componentURL = URLComponents()
+        componentURL.scheme = "https"
+        componentURL.host = "api.themoviedb.org"
+        componentURL.path = "/3/movie/popular"
+        let queryItemLanguage = URLQueryItem(name: "language", value: "en-US")
+        let queryItemAPIKey = URLQueryItem(name: "api_key", value: "fd2b04342048fa2d5f728561866ad52a")
+        let queryItemPageID = URLQueryItem(name: "page", value: String(MovieServiceAPI.pageID))
+        componentURL.queryItems = [queryItemLanguage, queryItemAPIKey, queryItemPageID]
+        return componentURL
     }
     
     // MARK: COLLECTION VIEW DELEGATE AND DATA SOURCE METHODS

@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1752B9A525A5B7C3008880E9 /* BaseServiceInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1752B9A425A5B7C3008880E9 /* BaseServiceInput.swift */; };
-		1752B9A725A5B7F3008880E9 /* MovieDetailServiceInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1752B9A625A5B7F3008880E9 /* MovieDetailServiceInput.swift */; };
 		175C23BE259E0F220050530B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175C23BD259E0F220050530B /* AppDelegate.swift */; };
 		175C23C0259E0F220050530B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175C23BF259E0F220050530B /* SceneDelegate.swift */; };
 		175C23C7259E0F230050530B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 175C23C6259E0F230050530B /* Assets.xcassets */; };
@@ -23,12 +21,9 @@
 		175C23EF25A114BF0050530B /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175C23ED25A114BF0050530B /* MovieDetailViewController.swift */; };
 		175C23F025A114BF0050530B /* MovieDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 175C23EE25A114BF0050530B /* MovieDetailViewController.xib */; };
 		175C23F225A1BECB0050530B /* MovieDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175C23F125A1BECB0050530B /* MovieDetail.swift */; };
-		1779A7FE25A9FF990015E3FA /* MovieServiceInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1779A7FD25A9FF990015E3FA /* MovieServiceInput.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1752B9A425A5B7C3008880E9 /* BaseServiceInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseServiceInput.swift; sourceTree = "<group>"; };
-		1752B9A625A5B7F3008880E9 /* MovieDetailServiceInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailServiceInput.swift; sourceTree = "<group>"; };
 		175C23BA259E0F220050530B /* SimpleProjectChallenge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleProjectChallenge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		175C23BD259E0F220050530B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		175C23BF259E0F220050530B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -46,7 +41,6 @@
 		175C23EE25A114BF0050530B /* MovieDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieDetailViewController.xib; sourceTree = "<group>"; };
 		175C23F125A1BECB0050530B /* MovieDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetail.swift; sourceTree = "<group>"; };
 		175C240325A32D280050530B /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		1779A7FD25A9FF990015E3FA /* MovieServiceInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieServiceInput.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,9 +110,6 @@
 				175C23D9259FC0750050530B /* MoviesResponse.swift */,
 				175C23DB259FC0AC0050530B /* Movie.swift */,
 				175C23F125A1BECB0050530B /* MovieDetail.swift */,
-				1752B9A425A5B7C3008880E9 /* BaseServiceInput.swift */,
-				1752B9A625A5B7F3008880E9 /* MovieDetailServiceInput.swift */,
-				1779A7FD25A9FF990015E3FA /* MovieServiceInput.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -226,12 +217,9 @@
 				175C23BE259E0F220050530B /* AppDelegate.swift in Sources */,
 				175C23DE259FC4190050530B /* MovieServiceAPI.swift in Sources */,
 				175C23C0259E0F220050530B /* SceneDelegate.swift in Sources */,
-				1779A7FE25A9FF990015E3FA /* MovieServiceInput.swift in Sources */,
 				175C23F225A1BECB0050530B /* MovieDetail.swift in Sources */,
 				175C23DC259FC0AC0050530B /* Movie.swift in Sources */,
-				1752B9A525A5B7C3008880E9 /* BaseServiceInput.swift in Sources */,
 				175C23EF25A114BF0050530B /* MovieDetailViewController.swift in Sources */,
-				1752B9A725A5B7F3008880E9 /* MovieDetailServiceInput.swift in Sources */,
 				175C23DA259FC0750050530B /* MoviesResponse.swift in Sources */,
 				175C23D3259F31240050530B /* MoviesListViewController.swift in Sources */,
 				175C23D7259F3B0A0050530B /* MovieCollectionViewCell.swift in Sources */,
