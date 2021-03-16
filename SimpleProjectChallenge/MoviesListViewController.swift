@@ -78,7 +78,10 @@ class MoviesListViewController: UIViewController, UICollectionViewDelegate, UICo
         
     // MARK: MOVIE REST API CALL
     func fetchMovieData() {
-        MovieServiceAPI.shared.makeServiceCall(componentURL: self.createComponentURL()) { (output: MoviesResponse) in
+        MovieServiceAPI.shared.makeServiceCall(componentURL: self.createComponentURL()) {[weak self] (output: MoviesResponse) in
+            guard let self = self else {
+                return
+            }
             MovieServiceAPI.pageID += 1
             for movie in output.results! {
                 let key = String(movie.id ?? 0)

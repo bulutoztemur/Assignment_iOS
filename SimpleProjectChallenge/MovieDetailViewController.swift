@@ -12,7 +12,7 @@ class MovieDetailViewController: UIViewController {
     
     let movieInfo: Movie?
     var movieDetail: MovieDetail?
-    var favoriteDelegate: FavoriteDelegate?
+    weak var favoriteDelegate: FavoriteDelegate?
     
     @IBOutlet weak var posterImage: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -36,7 +36,10 @@ class MovieDetailViewController: UIViewController {
     }
     
     func fetchMovieDetailData() {
-        MovieServiceAPI.shared.makeServiceCall(componentURL: self.createComponentURL()) { (output: MovieDetail) in
+        MovieServiceAPI.shared.makeServiceCall(componentURL: self.createComponentURL()) {[weak self] (output: MovieDetail) in
+            guard let self = self else {
+                return
+            }
             self.movieDetail = output
             self.titleLabel.text = self.movieDetail?.original_title
             self.overviewLabel.text = self.movieDetail?.overview
