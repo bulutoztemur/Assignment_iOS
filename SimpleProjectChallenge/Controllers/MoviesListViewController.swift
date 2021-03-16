@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 protocol FavoriteDelegate : class{
     func favoriteHandler(fav: Bool, id: Int)
 }
