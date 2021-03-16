@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol FavoriteDelegate {
+protocol FavoriteDelegate : class{
     func favoriteHandler(fav: Bool, id: Int)
 }
 
